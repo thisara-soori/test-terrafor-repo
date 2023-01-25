@@ -38,7 +38,7 @@ workflows:
       - plan:
           extra_args:
             - -var=aws_region=${BACKEND_REGION_NAME}
-            - -var-file="env/${BACKEND_BUCKET_ENV}/${BACKEND_BUCKET_ENV}.tfvars",
+            - -var-file=env/${BACKEND_BUCKET_ENV}/${BACKEND_BUCKET_ENV}.tfvars,
             
   
   #     extra_args: [-backend-config=env/staging.backend.tfvars]
