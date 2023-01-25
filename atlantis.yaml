@@ -24,8 +24,7 @@ workflows:
           value: us-west-2
       - run: rm -rf .terraform
       - init:
-          extra_args: 
-            - backend-config="env/backend.tfvars",
+          extra_args: [-backend-config=env/backend.tfvars]
             
       - plan:
           extra_args: [
