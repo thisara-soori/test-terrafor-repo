@@ -1,12 +1,5 @@
 # atlantis.yaml
 version: 2
-projects:
-- name: staging
-  dir: .
-  workflow: staging
-- name: production
-  dir: .
-  workflow: production
 workflows:
   production:
     plan:
