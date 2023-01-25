@@ -1,0 +1,26 @@
+# atlantis.yaml
+version: 2
+projects:
+- name: staging
+  dir: .
+  workflow: staging
+- name: production
+  dir: .
+  workflow: production
+workflows:
+  production:
+    plan:
+      steps:
+      - run: rm -rf .terraform # Otherwise terraform will get confused.
+      - init:
+          extra_args: [-backend-config=env/production.backend.tfvars]
+      - plan:
+          extra_args: [-var-file=env/production.tfvars]
+  staging:
+    plan:
+      steps:
+      - run: rm -rf .terraform
+      - init:
+          extra_args: [-backend-config=env/staging.backend.tfvars]
+      - plan:
+          extra_args: [-var-file=env/staging.tfvars]
