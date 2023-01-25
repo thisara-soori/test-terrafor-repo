@@ -1,5 +1,8 @@
 # atlantis.yaml
 version: 2
+projects:
+- dir: deployments/**
+
 workflows:
   production:
     plan:
