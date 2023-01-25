@@ -17,10 +17,11 @@ workflows:
     plan:
       steps:
       - env:
-        name: BACKEND_BUCKET_ENV
-        value: peng
-        name: BACKEND_REGION_NAME
-        value: us-west-2
+          name: BACKEND_BUCKET_ENV
+          value: peng
+      - env:
+          name: BACKEND_REGION_NAME
+          value: us-west-2
       - run: rm -rf .terraform
       - init:
           extra_args: 
