@@ -4,15 +4,29 @@ projects:
 - name: tf-tag-test
   dir: deployments/tf-tag-test
 workflows:
-  production:
-    plan:
+  # production:
+  #   plan:
+  #     steps:
+  #     - run: rm -rf .terraform # Otherwise terraform will get confused.
+  #     - init:
+  #         extra_args: [-backend-config=env/production.backend.tfvars]
+  #     - plan:
+  #         extra_args: [-var-file=env/production.tfvars]
+  # staging:
+  #   plan:
+  #     steps:
+  #     - run: rm -rf .terraform
+  #     - init:
+  #         extra_args: [-backend-config=env/staging.backend.tfvars]
+  #     - plan:
+  #         extra_args: [-var-file=env/staging.tfvars]
+  my_custom:
+    init:
       steps:
-      - run: rm -rf .terraform # Otherwise terraform will get confused.
       - init:
-          extra_args: [-backend-config=env/production.backend.tfvars]
-      - plan:
-          extra_args: [-var-file=env/production.tfvars]
-  staging:
+          extra_args: [-backend-config="bucket=ai-peng-terraform-state"]
+
+      extra_args: [-backend-config=env/staging.backend.tfvars]
     plan:
       steps:
       - run: rm -rf .terraform
