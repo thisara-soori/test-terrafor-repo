@@ -25,9 +25,9 @@ workflows:
       - init:
           extra_args: [
             -backend-config=bucket=ai-${BACKEND_BUCKET_ENV}-terraform-state,
-            -backend-config="region=us-west-2
-            -backend-config="key=$(basename $(pwd))/${BACKEND_REGION_NAME}
-            -backend-config "encrypt=true"
+            -backend-config="region=us-west-2,
+            -backend-config="key=$(basename $(pwd))/${BACKEND_REGION_NAME},
+            -backend-config "encrypt=true",
             ]
       - plan:
           extra_args: [
