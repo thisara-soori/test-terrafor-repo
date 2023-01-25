@@ -3,6 +3,7 @@ version: 2
 projects:
 - name: tf-tag-test
   dir: deployments/tf-tag-test
+  workflow: peng
 workflows:
   # production:
   #   plan:
