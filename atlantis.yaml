@@ -1,7 +1,7 @@
 # atlantis.yaml
 version: 2
 projects:
-- name: 
+- name: tf-tag-test
   dir: deployments/tf-tag-test
 workflows:
   production:
