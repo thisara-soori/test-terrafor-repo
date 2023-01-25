@@ -24,14 +24,11 @@ workflows:
       - run: rm -rf .terraform
       - init:
           extra_args: 
-            - backend-config="bucket=ai-${BACKEND_BUCKET_ENV}-terraform-state",
-            - backend-config="region=us-west-2",
-            - backend-config="key=$(basename $(pwd))/${BACKEND_REGION_NAME}",
-            - backend-config "encrypt=true",
+            - backend-config="",
             
       - plan:
           extra_args: [
-            -var-file="env/peng/peng.tfvars",
+            -var-file="env/backend.tfvars",
             -var "aws_region=us-west-2"
             ]
   
