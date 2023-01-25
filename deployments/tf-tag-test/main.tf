@@ -4,13 +4,6 @@ terraform {
 
 provider "aws" {
   region = var.aws_region
-  default_tags {
-		tags = module.git_tags.tags
-	}
-}
-
-module "git_tags" {
-	source = "../../modules/ai-git-tagger"
 }
 
 resource "aws_s3_bucket" "test-bucket" {
@@ -19,7 +12,7 @@ resource "aws_s3_bucket" "test-bucket" {
   tags = {
     Name        = "thisara-test-bucket"
     Environment = "peng"
-    wd-finops-metadata = "adaptiveplanning_nonprod_misc"
+    wd-finops-metadata = "test_tag"
   }
 }
 resource "aws_s3_bucket_acl" "example" {
