@@ -24,12 +24,11 @@ workflows:
       - run: rm -rf .terraform
       - init:
           extra_args: 
-            - backend-config="",
+            - backend-config="env/backend.tfvars",
             
       - plan:
           extra_args: [
             -var-file="env/backend.tfvars",
-            -var "aws_region=us-west-2"
             ]
   
   #     extra_args: [-backend-config=env/staging.backend.tfvars]
