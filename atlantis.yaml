@@ -12,7 +12,29 @@ workflows:
   #         extra_args: [-backend-config=env/production.backend.tfvars]
   #     - plan:
   #         extra_args: [-var-file=env/production.tfvars]
-  # staging:
+  peng:
+    plan:
+      steps:
+      - env:
+        name: BACKEND_BUCKET_ENV
+        value: peng
+        name: BACKEND_REGION_NAME
+        value: us-west-2
+      - run: rm -rf .terraform
+      - init:
+          extra_args: [
+            -backend-config=bucket=ai-${BACKEND_BUCKET_ENV}-terraform-state,
+            -backend-config="region=us-west-2
+            -backend-config="key=$(basename $(pwd))/${BACKEND_REGION_NAME}
+            -backend-config "encrypt=true"
+            ]
+      - plan:
+          extra_args: [
+            -var-file="env/peng/peng.tfvars",
+            -var "aws_region=us-west-2"
+            ]
+  
+  #     extra_args: [-backend-config=env/staging.backend.tfvars]
   #   plan:
   #     steps:
   #     - run: rm -rf .terraform
@@ -20,17 +42,3 @@ workflows:
   #         extra_args: [-backend-config=env/staging.backend.tfvars]
   #     - plan:
   #         extra_args: [-var-file=env/staging.tfvars]
-  my_custom:
-    init:
-      steps:
-      - init:
-          extra_args: [-backend-config="bucket=ai-peng-terraform-state"]
-
-      extra_args: [-backend-config=env/staging.backend.tfvars]
-    plan:
-      steps:
-      - run: rm -rf .terraform
-      - init:
-          extra_args: [-backend-config=env/staging.backend.tfvars]
-      - plan:
-          extra_args: [-var-file=env/staging.tfvars]
