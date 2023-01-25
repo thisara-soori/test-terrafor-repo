@@ -22,6 +22,9 @@ workflows:
       - env:
           name: BACKEND_REGION_NAME
           value: us-west-2
+      - env:
+          name: TF_ENV
+          value: 
       - run: rm -rf .terraform
       - init:
           extra_args:
@@ -31,9 +34,10 @@ workflows:
             - -backend-config=encrypt=true
             
       - plan:
-          extra_args: [
-            -var-file="env/backend.tfvars",
-            ]
+          extra_args:
+            - -var=aws_region=${BACKEND_REGION_NAME}
+            - -var-file="env/${BACKEND_BUCKET_ENV}/${BACKEND_BUCKET_ENV}.tfvars",
+            
   
   #     extra_args: [-backend-config=env/staging.backend.tfvars]
   #   plan:
