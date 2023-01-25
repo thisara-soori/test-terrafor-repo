@@ -26,8 +26,6 @@ workflows:
           name: TF_ENV
           value: 
       - run: rm -rf .terraform
-      - run: ls -la .
-      - run: ls -la env/peng/peng.tfvars
       - init:
           extra_args:
             - -backend-config=bucket=ai-${BACKEND_BUCKET_ENV}-terraform-state
