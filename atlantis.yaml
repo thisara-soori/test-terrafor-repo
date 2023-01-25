@@ -1,0 +1,51 @@
+# atlantis.yaml
+version: 2
+projects:
+- name: tf-tag-test
+  dir: deployments/tf-tag-test
+  workflow: peng
+workflows:
+  # production:
+  #   plan:
+  #     steps:
+  #     - run: rm -rf .terraform # Otherwise terraform will get confused.
+  #     - init:
+  #         extra_args: [-backend-config=env/production.backend.tfvars]
+  #     - plan:
+  #         extra_args: [-var-file=env/production.tfvars]
+  peng:
+    plan:
+      steps:
+      - env:
+          name: BACKEND_BUCKET_ENV
+          value: peng
+      - env:
+          name: BACKEND_REGION_NAME
+          value: us-west-2
+      - env:
+          name: TF_ENV
+          value: 
+      - run: rm -rf .terraform
+      - run: ls -la .
+      - run: ls -la env/peng/peng.tfvars
+      - init:
+          extra_args:
+            - -backend-config=bucket=ai-${BACKEND_BUCKET_ENV}-terraform-state
+            - -backend-config=key=tf-tag-test/${BACKEND_REGION_NAME}
+            - -backend-config=region=us-west-2
+            - -backend-config=encrypt=true
+            
+      - plan:
+          extra_args:
+            - -var=aws_region=${BACKEND_REGION_NAME}
+            - -var-file=env/${BACKEND_BUCKET_ENV}/${BACKEND_BUCKET_ENV}.tfvars
+            
+  
+  #     extra_args: [-backend-config=env/staging.backend.tfvars]
+  #   plan:
+  #     steps:
+  #     - run: rm -rf .terraform
+  #     - init:
+  #         extra_args: [-backend-config=env/staging.backend.tfvars]
+  #     - plan:
+  #         extra_args: [-var-file=env/staging.tfvars]
